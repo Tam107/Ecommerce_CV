@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
-public class ProductLitDTO {
+public class ProductListDTO {
     private Long id;
 
     @NotBlank(message = "Name is required")
