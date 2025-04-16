@@ -1,4 +1,4 @@
-package org.ecommercecv.dto;
+package org.ecommercecv.dto.request;
 
 import lombok.Data;
 

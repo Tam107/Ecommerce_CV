@@ -8,12 +8,12 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: create-drop
 
 jwt:
-  secret: 1234567890abcdef
+  secret: afe65bcd93be0f27d04415f68b9b6ca33f909553ad54c3966cd719a7e44606c1
   expiration: 86400000
   refresh-expiration: 604800000
 server:

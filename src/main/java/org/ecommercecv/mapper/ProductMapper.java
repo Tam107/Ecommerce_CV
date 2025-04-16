@@ -17,10 +17,9 @@ public interface ProductMapper {
     Product toEntity(ProductDTO productDTO);
 
     @Mapping(target = "userId", source = "user.id")
-    @Mapping(target = "productId", source = "product.id")
     CommentDTO toDto(Comment comment);
 
     @Mapping(target = "user.id", source = "userId")
-    @Mapping(target = "product.id", source = "productId")
+    @Mapping(target = "product", ignore = true)
     Comment toEntity(CommentDTO commentDTO);
 }

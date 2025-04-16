@@ -3,13 +3,20 @@ package org.ecommercecv.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ecommercecv.common.Role;
-import org.ecommercecv.dto.ChangePasswordRequest;
+import org.ecommercecv.dto.request.ChangePasswordRequest;
+import org.ecommercecv.dto.request.LoginRequest;
+import org.ecommercecv.dto.response.AuthResponse;
 import org.ecommercecv.exception.ResourceNotFoundException;
+import org.ecommercecv.model.Token;
 import org.ecommercecv.model.User;
+import org.ecommercecv.repository.TokenRepository;
 import org.ecommercecv.repository.UserRepository;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 
@@ -20,7 +27,11 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
+    private final TokenRepository tokenRepository;
 
+    @Transactional(rollbackFor = Exception.class)
     public User registerUser(User user) {
         log.info("Registering new user: {}", user.getEmail());
         if (userRepository.findByEmail(user.getEmail()).isPresent()){
@@ -33,6 +44,50 @@ public class UserService {
 //        user.setEmailConfirmation(false);
         
         return userRepository.save(user);
+    }
+
+    public AuthResponse login(LoginRequest request){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                request.getEmail(),
+                request.getPassword()
+        ));
+
+        var user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new BadCredentialsException("Invalid email or password"));
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        revokeAllUserTokens(user);
+        savedUserToken(user, jwtToken, refreshToken);
+        return AuthResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
+
+    }
+
+    protected void savedUserToken(User savedUser, String jwtToken, String refreshToken) {
+
+        var token = Token.builder()
+                .user(savedUser)
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .expired(false)
+                .revoked(false)
+                .build();
+        tokenRepository.save(token);
+
+    }
+
+    private void revokeAllUserTokens(User user) {
+        var validUserToken = tokenRepository.findAllValidTokensByUser(user.getId());
+        if (validUserToken.isEmpty()){
+            return;
+        }
+        validUserToken.forEach(token ->{
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserToken);
     }
 
     public User getUserByEmail(String email){

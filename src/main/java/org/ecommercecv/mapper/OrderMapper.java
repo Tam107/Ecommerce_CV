@@ -34,5 +34,5 @@ public interface OrderMapper {
 
     List<OrderItemDTO> toOrderItemDTOs(List<OrderItem> orderItem);
 
-    List<OrderItem> toOrderItems(List<OrderItemDTO> orderItemDTO);
+    List<OrderItem> toOrderItemEntities(List<OrderItemDTO> orderItemDTO);
 }
