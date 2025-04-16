@@ -2,11 +2,18 @@ package org.ecommercecv;
 
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
+import org.ecommercecv.dto.OrderDTO;
 import org.ecommercecv.dto.ProductDTO;
+import org.ecommercecv.mapper.OrderMapper;
+import org.ecommercecv.model.Order;
+import org.ecommercecv.model.OrderItem;
+import org.ecommercecv.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.xml.validation.Validator;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class EcommerceCvApplication {
@@ -15,6 +22,20 @@ public class EcommerceCvApplication {
         SpringApplication.run(EcommerceCvApplication.class, args);
 //        testProductDTO();
     }
+
+//    example for mapping DTO to entity
+
+//    @Autowired
+//    private OrderMapper orderMapper;
+
+//    public OrderDTO getOrder(Long id) {
+//        Order order = new Order();
+//        order.setId(id);
+//        User user = new User();
+//        order.setUser(user);
+//        order.setItems(Arrays.asList(new OrderItem()));
+//        return orderMapper.toDto(order);
+//    }
 
     private static void testProductDTO(){
 

@@ -1,6 +1,7 @@
 package org.ecommercecv.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.ecommercecv.common.OrderStatus;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "order")
+@Data
 public class Order {
 
     @Id
