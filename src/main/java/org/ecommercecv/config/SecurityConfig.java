@@ -38,7 +38,10 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/images").permitAll()
+                        .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/index.html").permitAll()
+                        .requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**").permitAll()
+                        .requestMatchers("/api/products/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))

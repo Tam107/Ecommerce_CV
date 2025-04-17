@@ -18,3 +18,17 @@ jwt:
   refresh-expiration: 604800000
 server:
   port:  8080
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    csrf:
+      enabled: true
+      path: /swagger-ui.html
+    openapi:
+      service:
+        api-docs: ecommerce
+        title: Ecommerce Backend
+        version: 1.0.0
+      server: http://localhost:${server.port}
