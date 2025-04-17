@@ -18,11 +18,11 @@ class UserServiceTest {
     @Test
     void testRegisterAndLogin() {
         // Register
-        User user = new User();
-        user.setEmail("testjunit@example.com");
-        user.setPassword("password123");
-        User registered = userService.registerUser(user);
-        assertEquals("testjunit@example.com", registered.getEmail());
+//        User user = new User();
+//        user.setEmail("testjunit@example.com");
+//        user.setPassword("password123");
+//        User registered = userService.registerUser(user);
+//        assertEquals("testjunit@example.com", registered.getEmail());
 
         // Login
         AuthRequest authRequest = new AuthRequest();

@@ -10,7 +10,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
 jwt:
   secret: afe65bcd93be0f27d04415f68b9b6ca33f909553ad54c3966cd719a7e44606c1
