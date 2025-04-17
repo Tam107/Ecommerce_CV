@@ -1,24 +1,14 @@
 package org.ecommercecv;
 
-import jakarta.validation.Validation;
-import jakarta.validation.ValidatorFactory;
-import org.ecommercecv.dto.OrderDTO;
 import org.ecommercecv.dto.ProductDTO;
-import org.ecommercecv.dto.request.LoginRequest;
+import org.ecommercecv.dto.request.AuthRequest;
 import org.ecommercecv.dto.response.AuthResponse;
-import org.ecommercecv.mapper.OrderMapper;
-import org.ecommercecv.model.Order;
-import org.ecommercecv.model.OrderItem;
 import org.ecommercecv.model.User;
 import org.ecommercecv.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import javax.xml.validation.Validator;
-import java.util.Arrays;
 
 @SpringBootApplication
 public class EcommerceCvApplication {
@@ -70,7 +60,8 @@ public class EcommerceCvApplication {
                 User newUser = new User();
                 newUser.setEmail("testuser@example.com");
                 newUser.setPassword("password123");
-                User registeredUser = userService.registerUser(newUser);
+                AuthRequest authRequest = new AuthRequest(newUser.getEmail(), newUser.getPassword());
+                User registeredUser = userService.registerUser(authRequest);
                 System.out.println("Success: Registered user with email: " + registeredUser.getEmail());
             } catch (Exception e) {
                 System.err.println("Error registering user: " + e.getMessage());
@@ -79,10 +70,10 @@ public class EcommerceCvApplication {
             // Test 2: Login with the registered user
             System.out.println("\nTest 2: Logging in");
             try {
-                LoginRequest loginRequest = new LoginRequest();
-                loginRequest.setEmail("testuser@example.com");
-                loginRequest.setPassword("password123");
-                AuthResponse authResponse = userService.login(loginRequest);
+                AuthRequest authRequest = new AuthRequest();
+                authRequest.setEmail("testuser@example.com");
+                authRequest.setPassword("password123");
+                AuthResponse authResponse = userService.login(authRequest);
                 System.out.println("Success: Access Token: " + authResponse.getAccessToken());
                 System.out.println("Success: Refresh Token: " + authResponse.getRefreshToken());
             } catch (Exception e) {

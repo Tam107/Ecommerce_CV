@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ecommercecv.dto.request.ChangePasswordRequest;
-import org.ecommercecv.dto.request.LoginRequest;
+import org.ecommercecv.dto.request.AuthRequest;
 import org.ecommercecv.dto.response.ApiResponse;
 import org.ecommercecv.dto.response.AuthResponse;
 import org.ecommercecv.model.User;
@@ -31,20 +31,20 @@ public class AuthController {
     private final JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword()
+                        authRequest.getEmail(),
+                        authRequest.getPassword()
                 )
         );
 
-        AuthResponse jwtToken = userService.login(loginRequest);
+        AuthResponse jwtToken = userService.login(authRequest);
         return ResponseEntity.ok(jwtToken);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> register(@Valid @RequestBody User user){
+    public ResponseEntity<ApiResponse> register(@Valid @RequestBody AuthRequest user){
         User newUser = userService.registerUser(user);
         ApiResponse apiResponse = new ApiResponse(201, "User registered successfully", newUser);
         return ResponseEntity.status(201).body(apiResponse);

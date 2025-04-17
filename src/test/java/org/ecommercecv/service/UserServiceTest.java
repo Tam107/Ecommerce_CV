@@ -1,6 +1,6 @@
 package org.ecommercecv.service;
 
-import org.ecommercecv.dto.request.LoginRequest;
+import org.ecommercecv.dto.request.AuthRequest;
 import org.ecommercecv.dto.response.AuthResponse;
 import org.ecommercecv.model.User;
 import org.junit.jupiter.api.Test;
@@ -25,10 +25,10 @@ class UserServiceTest {
         assertEquals("testjunit@example.com", registered.getEmail());
 
         // Login
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setEmail("testjunit@example.com");
-        loginRequest.setPassword("password123");
-        AuthResponse response = userService.login(loginRequest);
+        AuthRequest authRequest = new AuthRequest();
+        authRequest.setEmail("testjunit@example.com");
+        authRequest.setPassword("password123");
+        AuthResponse response = userService.login(authRequest);
         assertNotNull(response.getAccessToken());
         assertNotNull(response.getRefreshToken());
     }

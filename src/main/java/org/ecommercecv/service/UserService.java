@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ecommercecv.common.Role;
 import org.ecommercecv.dto.request.ChangePasswordRequest;
-import org.ecommercecv.dto.request.LoginRequest;
+import org.ecommercecv.dto.request.AuthRequest;
 import org.ecommercecv.dto.response.AuthResponse;
 import org.ecommercecv.exception.ResourceNotFoundException;
 import org.ecommercecv.model.Token;
@@ -32,13 +32,15 @@ public class UserService {
     private final TokenRepository tokenRepository;
 
     @Transactional(rollbackFor = Exception.class)
-    public User registerUser(User user) {
-        log.info("Registering new user: {}", user.getEmail());
-        if (userRepository.findByEmail(user.getEmail()).isPresent()){
+    public User registerUser(AuthRequest registerRequest) {
+        log.info("Registering new user: {}", registerRequest.getEmail());
+        if (userRepository.findByEmail(registerRequest.getEmail()).isPresent()){
             throw new IllegalStateException("Email already in use");
         }
+        User user = new User();
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEmail(registerRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setRole(Role.USER);
 //        user.setConfirmationCode(generateConfirmationCode());
 //        user.setEmailConfirmation(false);
@@ -46,7 +48,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public AuthResponse login(LoginRequest request){
+    public AuthResponse login(AuthRequest request){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.getEmail(),
                 request.getPassword()
