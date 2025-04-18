@@ -31,7 +31,7 @@ public class AuthController {
     private final JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest){
+    public ResponseEntity<ApiResponse> login(@RequestBody AuthRequest authRequest){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authRequest.getEmail(),
@@ -40,14 +40,14 @@ public class AuthController {
         );
 
         AuthResponse jwtToken = userService.login(authRequest);
-        return ResponseEntity.ok(jwtToken);
+        return ResponseEntity.ok(new ApiResponse(201, "Login successfully", jwtToken));
     }
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> register(@Valid @RequestBody AuthRequest user){
         User newUser = userService.registerUser(user);
         ApiResponse apiResponse = new ApiResponse(201, "User registered successfully", null);
-        return ResponseEntity.status(201).body(apiResponse);
+        return ResponseEntity.ok(apiResponse);
     }
 
     @PostMapping("/change-password")
@@ -55,7 +55,7 @@ public class AuthController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         if (authentication == null || email == null) {
-            return ResponseEntity.status(401).body(new ApiResponse(401, "Unauthorized", null));
+            return ResponseEntity.ok(new ApiResponse(401, "Unauthorized", null));
         }
         userService.changePassword(email, request);
         return ResponseEntity.ok(new ApiResponse(200, "Password changed successfully", null));

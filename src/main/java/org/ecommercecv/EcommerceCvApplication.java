@@ -10,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.math.BigDecimal;
+
 @SpringBootApplication
 public class EcommerceCvApplication {
 
@@ -39,7 +41,7 @@ public class EcommerceCvApplication {
         validProduct.setName("Valid Product");
         validProduct.setId(1l);
         validProduct.setDescription("This is a valid product description.");
-        validProduct.setPrice(100L);
+        validProduct.setPrice(new BigDecimal(15));
         validProduct.setQuantity(10);
         validProduct.setComments(null);
         validProduct.setImage("valid_image.png");

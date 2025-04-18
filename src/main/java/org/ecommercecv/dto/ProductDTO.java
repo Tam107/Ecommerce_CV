@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -18,7 +19,7 @@ public class ProductDTO {
     private String description;
 
     @Positive(message = "Price must be positive")
-    private Long price;
+    private BigDecimal price;
 
     @PositiveOrZero
     private Integer quantity;
