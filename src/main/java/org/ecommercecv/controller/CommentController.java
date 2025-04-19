@@ -28,6 +28,9 @@ public class CommentController {
                                                   @Valid @RequestBody CommentDTO commentDTO){
         Long userId = ((User) userDetails).getId();
         CommentDTO newComment = commentService.addComment(productId, userId, commentDTO);
+        if (newComment == null) {
+            return ResponseEntity.ok(new ApiResponse(400, "Failed to add comment", null));
+        }
         return ResponseEntity.ok(new ApiResponse(201, "Comment added successfully", newComment));
 
     }
@@ -35,6 +38,9 @@ public class CommentController {
     @GetMapping("/product/{productId}")
     public ResponseEntity<ApiResponse> getCommentsByProduct(@PathVariable Long productId){
         var comments = commentService.getCommentsByProduct(productId);
+//        if (comments == null || comments.isEmpty()) {
+//            return ResponseEntity.ok(new ApiResponse(404, "No comments found for this product", null));
+//        }
         return ResponseEntity.ok(new ApiResponse(200, "Comments retrieved successfully", comments));
     }
 

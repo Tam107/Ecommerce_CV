@@ -18,4 +18,18 @@ public class GlobalExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
         return new  ResponseEntity<>(errorDetails ,HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<?> handleInsufficientStockException(InsufficientStockException ex, WebRequest request) {
+
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+        return new  ResponseEntity<>(errorDetails ,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleGlobalException(Exception ex, WebRequest request) {
+
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+        return new  ResponseEntity<>(errorDetails ,HttpStatus.NOT_FOUND);
+    }
 }

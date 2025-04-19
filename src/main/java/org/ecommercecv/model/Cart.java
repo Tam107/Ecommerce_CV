@@ -26,4 +26,12 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<CartItem> items = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", items=" + items +
+                '}';
+    }
 }

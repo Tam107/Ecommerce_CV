@@ -53,7 +53,7 @@ public class EcommerceCvApplication {
     }
 
 
-    @Bean
+//    @Bean
     public CommandLineRunner commandLineRunner(UserService userService) {
         return args -> {
             System.out.println("=== Testing UserService with CommandLineRunner ===");
