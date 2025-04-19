@@ -27,7 +27,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    private CartService cartService;
+    private final CartService cartService;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final EmailService emailService;
@@ -89,7 +89,9 @@ public class OrderService {
                     if (product.getQuantity() == null) {
                         throw new IllegalStateException("Product quantity is null");
                     }
-                    if (product.getQuantity() < cartItem.getQuantity()) {
+                    log.info("Product quantity: {}", product.getQuantity());
+                    log.info("Cart item quantity: {}", cartItem.getQuantity());
+                    if (product.getQuantity() <= cartItem.getQuantity()) {
                         throw new IllegalStateException("Product quantity is not enough");
 
                     }

@@ -21,6 +21,7 @@ public class EcommerceCvApplication {
     public static void main(String[] args) {
         SpringApplication.run(EcommerceCvApplication.class, args);
 //        testProductDTO();
+//        updateUser(new UserService(), new UserRepository());
     }
 
 //    example for mapping DTO to entity
@@ -51,6 +52,14 @@ public class EcommerceCvApplication {
         System.out.println("Lombok toString: " + validProduct.toString());
         System.out.println("get Product " + validProduct.getName());
     }
+
+//    private static void updateUser(){
+//        User user = new User();
+//        user = userService.findUserById(52l);
+//        user.setEmailConfirmation(true);
+//        userRepository.save(user);
+//        System.out.println("Saved user: " + user);
+//    }
 
 
 //    @Bean

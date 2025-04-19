@@ -31,6 +31,7 @@ public class UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
+    private final EmailService emailService;
 
     @Transactional(rollbackFor = Exception.class)
     public User registerUser(AuthRequest registerRequest) {
@@ -42,9 +43,10 @@ public class UserService {
 
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setRole(Role.ADMIN);
-//        user.setConfirmationCode(generateConfirmationCode());
-//        user.setEmailConfirmation(false);
+        user.setRole(Role.USER);
+        user.setConfirmationCode(generateConfirmationCode());
+        user.setEmailConfirmation(false);
+        emailService.sendConfirmationCode(user);
         
         return userRepository.save(user);
     }
@@ -105,6 +107,19 @@ public class UserService {
 
     }
 
+//    confirm email
+    public void confirmEmail(String email, String confirationCode){
+        User user = getUserByEmail(email);
+        if(user.getConfirmationCode().equals(confirationCode)){
+            user.setEmailConfirmation(true);
+            user.setConfirmationCode(confirationCode);
+            userRepository.save(user);
+    }
+        else {
+            throw new BadCredentialsException("Invalid confirmation code");
+        }
+    }
+
     public void changePassword(String email, ChangePasswordRequest request){
         User user = getUserByEmail(email);
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())){
@@ -117,5 +132,10 @@ public class UserService {
 
     public List<User> getAllUser() {
         return userRepository.findAll();
+    }
+
+    public User findUserById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }
