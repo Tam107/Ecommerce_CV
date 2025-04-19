@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("select p(p.id, p.name, p.description, p.price, p.quantity, p.image) from Product p")
+    @Query("select new org.ecommercecv.dto.ProductListDTO(p.id, p.name, p.description, p.price, p.quantity, p.image) from Product p")
     Page<ProductListDTO> findAllWithoutComments(Pageable pageable);
 
     @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")

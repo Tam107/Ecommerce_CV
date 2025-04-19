@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -41,7 +42,7 @@ public class UserService {
 
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setRole(Role.USER);
+        user.setRole(Role.ADMIN);
 //        user.setConfirmationCode(generateConfirmationCode());
 //        user.setEmailConfirmation(false);
         
@@ -112,5 +113,9 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
+    }
+
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 }

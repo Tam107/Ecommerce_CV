@@ -46,6 +46,7 @@ public class ProductService {
      private List<CommentDTO> comments;*/
     @Transactional(rollbackFor = Exception.class)
     public ProductDTO createProduct(ProductDTO productDTO, MultipartFile image) throws IOException {
+        log.info("Creating new Product: {}", productDTO.getName());
         Product product = productMapper.toEntity(productDTO);
         if (image != null && !image.isEmpty()){
             String fileName = saveImage(image);

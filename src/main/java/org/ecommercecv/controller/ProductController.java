@@ -30,6 +30,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse> createProduct(@RequestPart("product") @Valid ProductDTO productDTO,
                                                      @RequestPart(value = "image", required = false) MultipartFile image)
             throws IOException, IOException {
+        log.info("Creating new product: {}", productDTO.getName());
         ProductDTO newProduct = productService.createProduct(productDTO, image);
         return ResponseEntity.ok(new ApiResponse(201, "Product created successfully", newProduct));
     }

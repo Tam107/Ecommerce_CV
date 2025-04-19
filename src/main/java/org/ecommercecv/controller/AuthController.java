@@ -40,6 +40,9 @@ public class AuthController {
         );
 
         AuthResponse jwtToken = userService.login(authRequest);
+        if (jwtToken == null) {
+            return ResponseEntity.ok(new ApiResponse(401, "Invalid email or password", null));
+        }
         return ResponseEntity.ok(new ApiResponse(201, "Login successfully", jwtToken));
     }
 
@@ -47,6 +50,9 @@ public class AuthController {
     public ResponseEntity<ApiResponse> register(@Valid @RequestBody AuthRequest user){
         User newUser = userService.registerUser(user);
         ApiResponse apiResponse = new ApiResponse(201, "User registered successfully", null);
+        if (newUser == null) {
+            return ResponseEntity.ok(new ApiResponse(400, "Email already in use", null));
+        }
         return ResponseEntity.ok(apiResponse);
     }
 

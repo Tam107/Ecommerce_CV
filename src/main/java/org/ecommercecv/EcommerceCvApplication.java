@@ -4,6 +4,7 @@ import org.ecommercecv.dto.ProductDTO;
 import org.ecommercecv.dto.request.AuthRequest;
 import org.ecommercecv.dto.response.AuthResponse;
 import org.ecommercecv.model.User;
+import org.ecommercecv.repository.UserRepository;
 import org.ecommercecv.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @SpringBootApplication
 public class EcommerceCvApplication {
@@ -81,6 +83,13 @@ public class EcommerceCvApplication {
             } catch (Exception e) {
                 System.err.println("Error logging in: " + e.getMessage());
             }
+
+            // test user role
+            System.out.println("\nTest 3: User Role");
+            System.out.println("All user "+ userService.getAllUser());
         };
     }
+
+
+
 }
