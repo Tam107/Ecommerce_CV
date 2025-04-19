@@ -41,9 +41,11 @@ This is a Java-based backend for an Ecommerce platform built using **Spring Boot
 **1. Swagger UI for API documentation and testing.**
 ![](./assets/Swagger-ui.png)
 **2. Email notifications for order confirmations and email verifications.**
+
 ![](./assets/Email-sender.png)
 
 **3. Endpoints for user authentication, product management, cart operations, order processing, and comment management.**
+
 ![](./assets/endpoint1.png)
 
 ![](./assets/endpoint4.png)
