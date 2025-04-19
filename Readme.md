@@ -1,4 +1,4 @@
-# 🛒 eCommerce Java Backend
+# 🛒 Ecommerce Java Backend
 
 ## 📖 Project Overview
 
