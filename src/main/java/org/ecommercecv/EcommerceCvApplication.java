@@ -58,18 +58,18 @@ public class EcommerceCvApplication {
         return args -> {
             System.out.println("=== Testing UserService with CommandLineRunner ===");
 
-            // Test 1: Register a new user
-            System.out.println("Test 1: Registering a new user");
-            try {
-                User newUser = new User();
-                newUser.setEmail("testuser@example.com");
-                newUser.setPassword("password123");
-                AuthRequest authRequest = new AuthRequest(newUser.getEmail(), newUser.getPassword());
-                User registeredUser = userService.registerUser(authRequest);
-                System.out.println("Success: Registered user with email: " + registeredUser.getEmail());
-            } catch (Exception e) {
-                System.err.println("Error registering user: " + e.getMessage());
-            }
+//            // Test 1: Register a new user
+//            System.out.println("Test 1: Registering a new user");
+//            try {
+//                User newUser = new User();
+//                newUser.setEmail("testuser@example.com");
+//                newUser.setPassword("password123");
+//                AuthRequest authRequest = new AuthRequest(newUser.getEmail(), newUser.getPassword());
+//                User registeredUser = userService.registerUser(authRequest);
+//                System.out.println("Success: Registered user with email: " + registeredUser.getEmail());
+//            } catch (Exception e) {
+//                System.err.println("Error registering user: " + e.getMessage());
+//            }
 
             // Test 2: Login with the registered user
             System.out.println("\nTest 2: Logging in");
