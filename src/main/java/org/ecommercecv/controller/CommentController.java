@@ -22,7 +22,7 @@ public class CommentController {
     private final CommentService commentService;
 
 
-    @PostMapping("/product/{productId}")
+    @PostMapping("/products/{productId}")
     public ResponseEntity<ApiResponse> addComment(@PathVariable Long productId,
                                                   @AuthenticationPrincipal UserDetails userDetails,
                                                   @Valid @RequestBody CommentDTO commentDTO){
@@ -35,7 +35,7 @@ public class CommentController {
 
     }
 
-    @GetMapping("/product/{productId}")
+    @GetMapping("/products/{productId}")
     public ResponseEntity<ApiResponse> getCommentsByProduct(@PathVariable Long productId){
         var comments = commentService.getCommentsByProduct(productId);
 //        if (comments == null || comments.isEmpty()) {
