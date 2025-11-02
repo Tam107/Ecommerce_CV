@@ -28,7 +28,7 @@ public class ProductController {
     private final ProductService productService;
 
 
-    @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse> createProduct(@RequestPart("product") @Valid ProductDTO productDTO,
                                                      @RequestPart(value = "image", required = false) MultipartFile image)
@@ -38,7 +38,7 @@ public class ProductController {
         return ResponseEntity.ok(new ApiResponse(201, "Product created successfully", newProduct));
     }
 
-    @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable Long id,
                                                      @RequestPart("product") @Valid ProductDTO productDTO,
@@ -52,7 +52,7 @@ public class ProductController {
         return ResponseEntity.ok(new ApiResponse(200, "Product updated successfully", updatedProduct));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
@@ -73,7 +73,7 @@ public class ProductController {
                 product));
     }
 
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity<ApiResponse> getAllProducts(@PageableDefault(size = 10) Pageable pageable) {
         Page<ProductListDTO> products = productService.getAllProducts(pageable);
         if (products.isEmpty()) {
